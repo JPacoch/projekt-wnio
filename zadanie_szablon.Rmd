@@ -37,6 +37,6 @@ Spis książek/artykułów/stron www, które pomogły w stworzeniu raportu
 
 Opis udziału kolejnych osób w projekcie w formie:
 
-- Imię Nazwisko - wykonanie testów statystycznych i ich interpretacja
-- Imię Nazwisko - napisanie wstępu, wykonanie wykresu drugiego
-- Imię Nazwisko - nic
+- Patryk Połomski - Założenie repozytorium git
+- Błażej Kościański - nic
+- Jakub Pacocha - nic
