@@ -1,0 +1,42 @@
+---
+title: "Tytuł"
+author: "Imię Nazwisko, Imię Nazwisko, Imię Nazwisko"
+output:
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Wstęp
+
+Wyjaśnienie co badamy i jaki problem rozwiązujemy
+
+# Materiały i metody
+
+Opisanie danych, przedstawienie ich w postaci tabelarycznej/wykresu, np.
+
+```{r pressure, echo=FALSE, fig.cap="Rycina 1: Podpis pod wykresem"}
+plot(pressure)
+```
+
+# Wyniki
+
+Wyliczenie odpowiedzi na pytania, przedstawienie ich w podstaci wykresów czy też podsumowań testów
+
+# Wnioski
+
+Podsumowanie uzyskanych wyników oraz odpowiedzenie na problem zawarty we wstępie
+
+# Literatura
+
+Spis książek/artykułów/stron www, które pomogły w stworzeniu raportu
+
+# Udział
+
+Opis udziału kolejnych osób w projekcie w formie:
+
+- Imię Nazwisko - wykonanie testów statystycznych i ich interpretacja
+- Imię Nazwisko - napisanie wstępu, wykonanie wykresu drugiego
+- Imię Nazwisko - nic
