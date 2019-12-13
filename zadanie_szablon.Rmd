@@ -1,6 +1,6 @@
 ---
-title: "Tytuł"
-author: "Imię Nazwisko, Imię Nazwisko, Imię Nazwisko"
+title: "Statystyczna analiza danych projektowych"
+author: "Jakub Pacocha, Patryk Połomski, Błażej Kościański"
 output:
   word_document: default
 ---
@@ -29,14 +29,15 @@ Wyliczenie odpowiedzi na pytania, przedstawienie ich w podstaci wykresów czy te
 
 Podsumowanie uzyskanych wyników oraz odpowiedzenie na problem zawarty we wstępie
 
-# Literatura
+# Literatura oraz źródła internetowe
 
-Spis książek/artykułów/stron www, które pomogły w stworzeniu raportu
+www.matemaks.pl/statystyka.html
+nowosad.github.io/dydaktyka
+stackoverflow.com
+Nowosad, J., (2019). Elementarz programisty: wstęp do programowania używając R.
 
 # Udział
 
-Opis udziału kolejnych osób w projekcie w formie:
-
-- Patryk Połomski - Założenie repozytorium git
+- Patryk Połomski - Założenie repozytorium git, podstawowe czyszczenie danych oraz analiza wstępna
 - Błażej Kościański - nic
 - Jakub Pacocha - nic
