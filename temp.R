@@ -5,6 +5,21 @@
 
 library("tidyverse")
 library("magrittr")
+
 raw = read.csv("projekt_stat.csv")
 summary(raw)
+main = raw
+
+#$pora_dnia cleanup
+main$pora_dnia %<>% 
+  str_replace_all("\\[0,8\\)", "0-8") %>% 
+  str_replace_all("\\[16,24\\]", "16-24") %>% 
+  str_replace_all("\\[8,16\\)", "8-16") %>% 
+  as.factor()
+
+#lc_name cleanup
+main$lc_name %<>% 
+  str_replace_all("Artificial surfaces", "sztuczne") %>% 
+  str_replace_all("Agricultural areas", "naturalne")
+#----------------------------------------------------------
 
