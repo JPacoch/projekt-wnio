@@ -7,7 +7,6 @@ library("tidyverse")
 library("magrittr")
 
 raw = read.csv("projekt_stat.csv")
-summary(raw)
 main = raw
 
 #$pora_dnia cleanup
@@ -22,4 +21,24 @@ main$lc_name %<>%
   str_replace_all("Artificial surfaces", "sztuczne") %>% 
   str_replace_all("Agricultural areas", "naturalne")
 #----------------------------------------------------------
+summary(main)
+#----
+main %>% 
+  ggplot(aes(x=id,y=PM10, group=id)) +
+  geom_boxplot() +
+  labs(title = "Ogólny rozrzut danych PM10", x="id stacji pomiarowej")
+#----
+main %>% 
+  ggplot(aes(x=pora_dnia, y=PM10)) +
+  geom_boxplot() +
+  labs(title = "Rozrzut danych PM10 wg pory dnia")
+#----
+main %>% 
+  ggplot(aes(x=lc_name, y=PM10)) +
+  geom_boxplot() +
+  labs(title = "Rozrzut danych PM10 wg pokrycia terenu", x=NULL)
+#----
+
+
+
 
