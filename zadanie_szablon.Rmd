@@ -39,5 +39,5 @@ Nowosad, J., (2019). Elementarz programisty: wstęp do programowania używając 
 # Udział
 
 - Patryk Połomski - Założenie repozytorium git, podstawowe czyszczenie danych oraz analiza wstępna
-- Błażej Kościański - nic
+- Błażej Kościański - przygotowanie ggplotów i wybór szaty kolorystycznej, wgłębna analiza statystyczna
 - Jakub Pacocha - nic

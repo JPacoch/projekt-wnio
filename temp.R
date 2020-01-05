@@ -4,9 +4,6 @@
 # Sprawdź czy istnieje relacja pomiędzy wartościami PM10 a różnymi kategoriami pokrycia terenu.
 
 library("tidyverse")
-library("magrittr")
-library("tidyr")
-library("dplyr")
 
 raw = read.csv("projekt_stat.csv")
 main = raw
@@ -23,6 +20,12 @@ main$lc_name %<>%
   str_replace_all("Artificial surfaces", "sztuczne") %>% 
   str_replace_all("Agricultural areas", "rolne")
 
+#---- eliminacja wartości dziwnych (ewidentnie błędy pomiarowe)
+#wpierw tworzymy obiekt który przechowuje te wartości, na pamiątkę lub do analizy
+main_odstajace <- pivot_wider(main, names_from = pora_dnia, values_from = PM10)
+main_odstajace <- filter(main_odstajace, main_odstajace$`0-8` == main_odstajace$`8-16`)
+#następnie usuwamy je z main poprzez bezpośrednie wskazanie błędnych id
+main <- filter(main, !main$id %in% c(178, 38, 88))
 
 #----------------------------------------------------------
 #---- miary położenia ogólne
@@ -49,7 +52,6 @@ var(main$PM10)
 #---- odchylenie standardowe
 sd(main$PM10)
 
-
 #----------------------------------------------------------
 #----
 main %>% 
@@ -60,7 +62,7 @@ main %>%
 main %>% 
   ggplot(aes(x=pora_dnia, y=PM10)) +
   geom_boxplot(notch = TRUE, fill = "deepskyblue2") +
-  labs(title = "Rozrzut danych PM10 wg pory dnia")
+  labs(title = "Rozrzut danych PM10 wg pory dnia") #tutaj cos o tym mozna napisac bo to ciekawe chyba
 #----
 main %>% 
   ggplot(aes(x=lc_name, y=PM10)) +
@@ -73,7 +75,6 @@ main %>%
 main %>% 
   ggplot(aes(x = PM10)) +
   geom_histogram(binwidth = 2.5)
-
 
 #---- zależność między wartościami PM10 a pokryciem terenu
 t.test(PM10 ~ lc_name, data = main)
@@ -92,7 +93,6 @@ ANOVA                 #p-value testu ANOVA
 #tzn, że istnieją różnice w wartościach PM10 między wartościami z różnych pór dnia
 #??? chyba
 
-
 #---- test post-hoc dla ANOVA
 ANOVA_2 <- aov(PM10 ~ pora_dnia, data = main)
 posthoc_ANOVA = TukeyHSD(ANOVA_2, which = "pora_dnia", conf.level = 0.95)
@@ -103,10 +103,4 @@ plot(posthoc_ANOVA, las = 1)
 #między grupą nocną a poranną (16-24 : 0-8)
 #między grupą popołudniową a nocną (8-16 : 16-24)
 
-
 #----------------------------------------------------------
-#---- wartości dziwne
-main_odstajace <- pivot_wider(main, names_from = pora_dnia, values_from = PM10)
-main_odstajace <- filter(main_odstajace, main_odstajace$`0-8` == main_odstajace$`8-16`)
-main_fixed <- filter(main, !main$id %in% c(178, 38, 88))
-
