@@ -4,6 +4,8 @@
 # Sprawdź czy istnieje relacja pomiędzy wartościami PM10 a różnymi kategoriami pokrycia terenu.
 
 library("tidyverse")
+library("dunn.test")
+library("FSA")
 
 raw = read.csv("projekt_stat.csv")
 main = raw
@@ -71,36 +73,57 @@ main %>%
 
 
 #----------------------------------------------------------
-#---- histogram udowadniający że rozkład danych jest zbliżony do rozkładu normalnego
+#---- histogram rozkładu danych
 main %>% 
   ggplot(aes(x = PM10)) +
   geom_histogram(binwidth = 2.5)
 
+shapiro.test(main[ ,2])
+
+
 #---- zależność między wartościami PM10 a pokryciem terenu
-t.test(PM10 ~ lc_name, data = main)
+wilcox.test(PM10 ~ lc_name, data = main)
 
 #p-value > 0.05, czyli nie możemy odrzucić naszej hipotezy 0
 #tzn, że pokrycie terenu nie ma znacznego wpływu na zmianę wartości
 
 
 #---- zależność między wartościami PM10 a porami dnia
-ANOVA <- summary(aov(PM10 ~ pora_dnia, data = main))
-ANOVA <- ANOVA[[1]]
-ANOVA <- ANOVA[1, 5]
-ANOVA                 #p-value testu ANOVA
+KRUSKAL <- kruskal.test(PM10 ~ pora_dnia, data = main)
+KRUSKAL[[3]]  #p-value
 
 #odrzucamy hipozezę 0 bo p-value jest niskie i przyjmujemy hipotezę alternatywną
 #tzn, że istnieją różnice w wartościach PM10 między wartościami z różnych pór dnia
 #??? chyba
 
-#---- test post-hoc dla ANOVA
-ANOVA_2 <- aov(PM10 ~ pora_dnia, data = main)
-posthoc_ANOVA = TukeyHSD(ANOVA_2, which = "pora_dnia", conf.level = 0.95)
-par(mar = c(5, 7, 4, 2))                #marginesy
-plot(posthoc_ANOVA, las = 1)
+
+#---- test post-hoc
+dunn.test(main$PM10, main$pora_dnia, method = "bonferroni")
 
 #z wykresu wynika, że istnieją różnice w wartościach:
 #między grupą nocną a poranną (16-24 : 0-8)
 #między grupą popołudniową a nocną (8-16 : 16-24)
 
 #----------------------------------------------------------
+
+
+rp <- subset(main, pora_dnia %in% c("0-8", "8-16"))
+pw <- subset(main, pora_dnia %in% c("8-16", "16-24"))
+wr <- subset(main, pora_dnia %in% c("16-24", "0-8"))
+
+wilcox.test(PM10 ~ pora_dnia, data = rp)
+wilcox.test(PM10 ~ pora_dnia, data = pw)
+wilcox.test(PM10 ~ pora_dnia, data = wr)
+
+# 3 razy test wilcox pokazuje to samo co test dunna
+
+
+
+
+
+
+
+
+
+
+
