@@ -97,6 +97,7 @@ KRUSKAL[[3]]  #p-value
 
 #---- test post-hoc
 dunn.test(main$PM10, main$pora_dnia, method = "bonferroni")
+dunn.test(main$PM10, main$pora_dnia, method = "sidak") # dwie metody o tym samym wyniku
 
 #z wykresu wynika, że istnieją różnice w wartościach:
 #między grupą nocną a poranną (16-24 : 0-8)
