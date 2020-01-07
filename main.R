@@ -71,15 +71,13 @@ main %>%
   geom_boxplot(notch = TRUE, fill = "deepskyblue2") +
   labs(title = "Rozrzut danych PM10 wg pokrycia terenu", x=NULL)
 
-
 #----------------------------------------------------------
 #---- histogram rozkładu danych
 main %>% 
   ggplot(aes(x = PM10)) +
   geom_histogram(binwidth = 2.5)
 
-shapiro.test(main[ ,2])
-
+shapiro.test(main[ ,2]) #odrzucamy hipoteze zerowa, rozklad NIE jest normalny
 
 #---- zależność między wartościami PM10 a pokryciem terenu
 wilcox.test(PM10 ~ lc_name, data = main)
@@ -106,7 +104,6 @@ dunn.test(main$PM10, main$pora_dnia, method = "bonferroni")
 
 #----------------------------------------------------------
 
-
 rp <- subset(main, pora_dnia %in% c("0-8", "8-16"))
 pw <- subset(main, pora_dnia %in% c("8-16", "16-24"))
 wr <- subset(main, pora_dnia %in% c("16-24", "0-8"))
@@ -116,14 +113,3 @@ wilcox.test(PM10 ~ pora_dnia, data = pw)
 wilcox.test(PM10 ~ pora_dnia, data = wr)
 
 # 3 razy test wilcox pokazuje to samo co test dunna
-
-
-
-
-
-
-
-
-
-
-
