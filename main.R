@@ -55,11 +55,22 @@ var(main$PM10)
 sd(main$PM10)
 
 #----------------------------------------------------------
-#----
-main %>% 
-  ggplot(aes(x=id,y=PM10, group=id)) +
-  geom_boxplot(fill = "deepskyblue2") +
-  labs(title = "Ogólny rozrzut danych PM10", x="id stacji pomiarowej")
+#---- piekny plot dziekuje dr Nowosad za sugestie
+  main_gg = select(main, c(1,2,3))
+  main_gg$id = as.character(main$id)
+  main_gg = mutate(main_gg,id = fct_reorder(id, PM10))
+  ggplot(main_gg,aes(x=id,y=PM10,color=pora_dnia)) +
+  scale_y_continuous(limits = c(0, 80), expand = c(0.005, 0.005),
+                       breaks = c(4.9, seq(10, 65.2, by = 10),65.2)) +
+  geom_point() + geom_line(color="gray33") +
+  labs(title = "Ogólny rozrzut danych PM10", x="Stacja pomiarowa") +
+  #geom_hline(aes(yintercept = 65.2), color = "gray70", size = 0.6)+
+  #geom_hline(aes(yintercept = 4.9), color = "gray70", size = 0.6)+
+  theme(axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.grid = element_blank(),
+          panel.background = element_blank())
+
 #----
 main %>% 
   ggplot(aes(x=pora_dnia, y=PM10)) +
