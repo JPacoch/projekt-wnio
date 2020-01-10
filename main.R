@@ -116,12 +116,24 @@ dunn.test(main$PM10, main$pora_dnia, method = "sidak") # dwie metody o tym samym
 
 #----------------------------------------------------------
 
-rp <- subset(main, pora_dnia %in% c("0-8", "8-16"))
-pw <- subset(main, pora_dnia %in% c("8-16", "16-24"))
-wr <- subset(main, pora_dnia %in% c("16-24", "0-8"))
+rano_poludnie <- subset(main, pora_dnia %in% c("0-8", "8-16"))
+poludnie_wieczor <- subset(main, pora_dnia %in% c("8-16", "16-24"))
+wieczor_rano <- subset(main, pora_dnia %in% c("16-24", "0-8"))
 
-wilcox.test(PM10 ~ pora_dnia, data = rp)
-wilcox.test(PM10 ~ pora_dnia, data = pw)
-wilcox.test(PM10 ~ pora_dnia, data = wr)
+wilcox.test(PM10 ~ pora_dnia, data = rano_poludnie)
+wilcox.test(PM10 ~ pora_dnia, data = poludnie_wieczor)
+wilcox.test(PM10 ~ pora_dnia, data = wieczor_rano)
 
 # 3 razy test wilcox pokazuje to samo co test dunna
+
+#----------------------------------------------------------
+#---- wartości między 1sd
+sd_pm10 <- sd(main$PM10)
+sr_pm10 <- mean(main$PM10)
+main_1sd <- filter(main, main$PM10 < sr_pm10 + sd_pm10 & main$PM10 > sr_pm10 - sd_pm10)
+
+#procent
+nrow(main_1sd) * 100 / nrow(main)
+
+
+
