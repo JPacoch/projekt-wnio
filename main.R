@@ -132,8 +132,9 @@ sd_pm10 <- sd(main$PM10)
 sr_pm10 <- mean(main$PM10)
 main_1sd <- filter(main, main$PM10 < sr_pm10 + sd_pm10 & main$PM10 > sr_pm10 - sd_pm10)
 
-#procent
+#procent wartosci miedzy 1sd
 nrow(main_1sd) * 100 / nrow(main)
 
-
+#ile procent zajmuja wartosci powyżej 50 (na życzenie Jakuba)
+nrow(filter(main, main$PM10 > 50)) * 100 / nrow(main)
 
