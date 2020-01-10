@@ -1,6 +1,6 @@
 ---
-title: "Statystyczna analiza danych projektowych"
-author: "Jakub Pacocha, Patryk Połomski, Błażej Kościański"
+title: "Czasowe i przestrzenne zależności w wielkości stężenia PM10"
+author: "Błażej Kościański, Patryk Połomski, Jakub Pacocha"
 output:
   word_document: default
 ---
@@ -35,7 +35,7 @@ Występowanie i odpowiednie zagęszczenie pyłów zawieszonych znacząco wpływa
 
 Najdrobniejsze cząsteczki pyłów z łatwością potrafią dostać się wewnątrz organizmów żywych poprzez ich drogi oddechowe. Substancje zaliczane do kategorii PM10 lub mniejsze, w przypadku cyklicznego wystwienia organizmu na ich działanie, mogą powodować liczne choroby i schorzenia.  Wdychiwane przez człowieka najczęściej doprowadzają do chorób górnych i dolnych dróg oddechowych, układu limfatycznego; sprzyjają rozwojowi astmy, pylicy czy nawet raka płuc.
 
-Celem pracy jest przetworzenie, scharakteryzowanie i analiza zebranych danych z punktówych pomiarów powietrza pod kątem występowania związków PM10 (zatem, takich pyłów, których średnica nie przekraczającza 10 μm). 
+Celem pracy jest przetworzenie, scharakteryzowanie i analiza zebranych danych z punktówych pomiarów powietrza pod kątem występowania PM10 (zatem, takich pyłów, których średnica nie przekraczającza 10 μm) oraz wykazanie związków i prawidłowości dotyczących wysokości stężenia tych pyłów pod względem określonych kryteriów. 
 
 
 # Opis metod badawczych
@@ -84,12 +84,14 @@ main %>%
 
 # Wnioski
 
-% przekracza 50 µg/m3 dopuszczalnej dobowej normy według Głównego Inspektoratu Ochrony Środowiska. Rozstęp danych w zbiorze oscyluje pomiędzy około 5 do 65 µg/m3, jednakże w odniesieniu do wspomnianych norm GIOŚ wydaje się być niewielki. Nie wykazano znaczących statystycznie różnic pomiędzy obszarami rolniczymi, a sztucznymi (Ryc.2). Może być to spowodowane podobną odległością stacji pomiarowych od stref przemysłowych, osiedli domów jednorodzinnych lub ulic o dużej przepustowości. 
+W przybliżeniu 6,4% pomiarów przekracza próg 50 µg/m3 - dopuszczalnej dobowej normy PM10 według Głównego Inspektoratu Ochrony Środowiska. Wartości danych w zbiorze oscylują pomiędzy około 5 do 65 µg/m3, jednakże w odniesieniu do wspomnianych norm GIOŚ ich maksima wydają się być niewielke. Nie wykazano znaczących statystycznie różnic pomiędzy obszarami rolniczymi, a sztucznymi (Ryc.2). Może być to spowodowane podobną odległością stacji pomiarowych od stref przemysłowych, osiedli domów jednorodzinnych lub ulic o dużej przepustowości. 
 
-Przy wykorzystaniu porównań post hoc, a także wizualizacji zjawiska, przedstawiono istotne różnice pomiędzy grupami pomiarów prowadzonych w różnej porze dnia. Stężenie PM10 w godzinach 16-24 jest większe niż w pozostałych częściach doby. Za taki wynik odpowiedzialne jest zjawisko inwersji termicznej. W godzinach popołudniowych, po zmroku, maleje temperatura powietrza przy gruncie; energia zaś emitowana jest ku wyższym partiom troposfery. Powstrzymywane jest pionowe mieszanie się powietrza – pyły i zanieczyszczenia będące produktami emisji zostają zablokowane. Efektem jest zwiększone stężenie aerozoli atmosferycznych przy gruncie oraz powstanie smogu typu londyńskiego. 
+Przy wykorzystaniu porównań post hoc, a także wizualizacji zjawiska, zaobserwowano istotne różnice pomiędzy grupami pomiarów prowadzonych w różnej porze dnia. Stężenie PM10 w godzinach 16-24 jest większe niż w pozostałych częściach doby. Za taki wynik odpowiedzialne jest zjawisko inwersji termicznej. W godzinach popołudniowych, po zmroku, maleje temperatura powietrza przy gruncie; energia zaś emitowana jest ku wyższym partiom troposfery. Powstrzymywane jest pionowe mieszanie się powietrza – pyły i zanieczyszczenia będące produktami emisji zostają zablokowane. Efektem jest zwiększone stężenie aerozoli atmosferycznych przy gruncie oraz powstanie smogu typu londyńskiego. 
+
+Obszar poddany pomiarom to teren o względnie czystym powietrzu.
 
 
-# Literatura oraz źródła internetowe
+# Bibliografia
 
 1.	https://goldbook.iupac.org/terms (stan z 4.01.2020)
 2.	http://www.grida.no/climate (stan z 4.01.2020)
