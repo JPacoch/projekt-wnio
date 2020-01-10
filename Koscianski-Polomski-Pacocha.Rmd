@@ -1,0 +1,108 @@
+---
+title: "Statystyczna analiza danych projektowych"
+author: "Jakub Pacocha, Patryk Połomski, Błażej Kościański"
+output:
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("dunn.test")
+library("FSA")
+raw = read.csv("projekt_stat.csv")
+main = raw
+main$pora_dnia %<>% 
+  str_replace_all("\\[0,8\\)", "0-8") %>% 
+  str_replace_all("\\[16,24\\]", "16-24") %>% 
+  str_replace_all("\\[8,16\\)", "8-16") %>% 
+  as.factor()
+main$lc_name %<>% 
+  str_replace_all("Artificial surfaces", "sztuczne") %>% 
+  str_replace_all("Agricultural areas", "rolne")
+main_odstajace <- pivot_wider(main, names_from = pora_dnia, values_from = PM10)
+main_odstajace <- filter(main_odstajace, main_odstajace$`0-8` == main_odstajace$`8-16`)
+main <- filter(main, !main$id %in% c(178, 38, 88))
+```
+
+# Wstęp
+
+Cząstki ciekłe bądź stałe rozproszone w gazie, zanieczyszczające atmosferę, które posiadają często niejednorodną strukturę i wielkość określane są mianem aerozoli. Najczęściej kategoryzuje się je na podstawie ich średnicy, za pomocą ustalonych przedziałów PM (z ang. particulate matter), które to przedziały opisane są odpowiednią liczbą określającą w mikrometrach średnicę cząstek pyłów zawieszonych. Ich podział i kategoryzacja służą badaniom i analizie m.in. jakości powietrza, procesów eolicznych lub endogenicznych (takich jak wulkanizm).
+
+Kompozycja aerozoli atmosferycznych jest silnie zróżnicowana; składają się one ze związków pierwotnych i wtórnych, które rozróżniane są na podstawie ich pochodzenia.  Głównymi składnikami są m.in. siarczany, azotany, materia organiczna, sól morska, pył glebowy, cząstki węgla. Podstawowym źródłem składników pierwotnych są pyły wulkaniczne, materiał eoliczny drobnych piasków pustynnych, produkty erozji gleb oraz produkty spalania w ciepłownictwie mieszkaniowym lub emitowane przez ruch drogowy. Ponadto cząstki wtórne wytwarzane są  na skutek reakcji chemicznych gazów takich jak amoniak, dwutlenki siarki czy tlenki azotu. Z tych gazów bądź z ich produktów tworzone są aerozole atmosferyczne poprzez procesy koagulacji i nukleacji.
+
+Występowanie i odpowiednie zagęszczenie pyłów zawieszonych znacząco wpływają na klimat i środowsko. Bezpośrednio powodują absorpcję, rozpraszanie i odbijanie promieniowania długofalowego i promieniowania krótkofalowego w ziemskiej atmosferze. Procesy te wzmagają tempo ocieplania się klimatu. Istnieją również liczne dowody i wyjaśnienia opisujące oddziaływanie migrujących w atmosferze chmur pyłów wulkanicznych powodujących fluktuacje w średnich rocznych temperaturach na Ziemi. Jednakże wpływ aerozoli atmosferycznych na to zjawisko jest zdecydowanie trudniejszy do oszacowania niż w przypadku kluczowych gazów cieplarnianych.
+
+Najdrobniejsze cząsteczki pyłów z łatwością potrafią dostać się wewnątrz organizmów żywych poprzez ich drogi oddechowe. Substancje zaliczane do kategorii PM10 lub mniejsze, w przypadku cyklicznego wystwienia organizmu na ich działanie, mogą powodować liczne choroby i schorzenia.  Wdychiwane przez człowieka najczęściej doprowadzają do chorób górnych i dolnych dróg oddechowych, układu limfatycznego; sprzyjają rozwojowi astmy, pylicy czy nawet raka płuc.
+
+Celem pracy jest przetworzenie, scharakteryzowanie i analiza zebranych danych z punktówych pomiarów powietrza pod kątem występowania związków PM10 (zatem, takich pyłów, których średnica nie przekraczającza 10 μm). 
+
+
+# Opis metod badawczych
+
+Projekt wykonany został na podstawie danych pozyskanych z serii pomiarów cząstek PM10 z kilku stacji wyznaczonych na obszarach cechujących się różnym pokryciem terenowym (obszary rolnicze bądź sztuczne), informacji zawartych w szeroko dostępnej literaturze, Internecie, wiedzy własnej oraz własnych obserwacji. Głównym źródłem danych były serie pomiarowe, które podzielone zostały na trzy grupy reprezentujące porę dnia, w których się odbywały – grupa pierwsza (od północy do godziny 8:00), grupa druga (od godziny 8:00 włącznie do godziny 16:00) oraz grupa trzecia (od godziny 16:00 włącznie do północy). Zebrane i i przez nas uporządkowane posłużyły nam do przeprowadzenia na nich testów i analiz. Do wykonania projektu wykorzystano wizualizacje za pomocą wykresów, a także metody statystyczne: m.in. analizy wariancji, porównania post hoc, statystyki opisowe. 
+
+Wszystkie z opisanych powyżej operacji uwzględniających wyliczenia, przekształcenia danych, utworzenie wykresów, przeprowadzenie testów i wykorzystanie metod statystycznych wykonane zostały w języku programowania R przy użyciu IDE R Studio.
+
+
+
+# Wyniki
+
+Wstępne uporządkowanie i eliminacja błędnych wartości pozwoliły na zwiększenie wiarygodności zbioru oraz trafności przeprowadzanych na nim operacji. Rozkład omawianych danych nie jest rozkładem normalnym; negatywny wynik testu Shapiro-Wilka potwierdza tę prawidłowość:
+
+```{r, echo=FALSE}
+shapiro.test(main[ ,2])
+```
+
+Rozstęp zbioru wynosi 60,37613 µg/m3 (Ryc.1); w odległości jednego odchylenia standardowego (σ ≈ 8,92) od średniej, wynoszącej w przybliżeniu 36,16 - znajduje się 74,78% próby. 	Rozkład danych jest zbyt wysmukły by można było potwierdzić jego podobieństwo do rozkładu Gaussa. Nie obserwuje się znaczących statystycznie różnic pomiędzy grupami pomiarów wykonanych na obszarach rolnych, a tych wykonanych na obszarach sztucznych. Prawidłowość tę potwierdza negatywny wynik testu Wilcoxona, a także wizualizacja zjawiska na wykresie pudełkowym (Ryc.2). 
+
+```{r,echo=FALSE, fig.cap="Ryc.1: Ogólny rozrzut danych PM10",fig.width=10, fig.height=5, fig.fullwidth=TRUE}
+  main_gg = select(main, c(1,2,3))
+  main_gg$id = as.character(main$id)
+  main_gg = mutate(main_gg,id = fct_reorder(id, PM10))
+  ggplot(main_gg,aes(x=id,y=PM10,color=pora_dnia)) +
+  scale_y_continuous(limits = c(0, 80), expand = c(0.005, 0.005),
+                       breaks = c(4.9, seq(10, 65.2, by = 10),65.2)) +
+  geom_point() + geom_line(color="gray33") +
+  labs(x="Stacja pomiarowa") +
+  #geom_hline(aes(yintercept = 65.2), color = "gray70", size = 0.6)+
+  #geom_hline(aes(yintercept = 4.9), color = "gray70", size = 0.6)+
+  theme(axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.grid = element_blank(),
+          panel.background = element_blank())
+```
+
+Odwrotną tendencję przedstawia jednoczynnikowa analiza wariancji Kruskala-Wallisa przeprowadzona na trzech wyselekcjonowanych ze względu na okres pomiaru grupach. Potwierdza ona brak  podobieństw wszystkich trzech zbiorów danych. Przeprowadzenie porównań post hoc wykazuje statystyczne różnice pomiędzy grupami pomiarów wykonywanych w okresie 0-8, a 16-24 oraz 8-16, a 16-24. Nie obserwuje się znaczących różnic pomiędzy wartościami grup 0-8 i 8-16. Związek ten widoczny jest również na wizualizacji (Ryc.1).
+
+```{r, echo=FALSE, fig.cap="Ryc.2: Rozrzut danych PM10 wg pokrycia terenu", fig.width=4, fig.height=3,fig.fullwidth=TRUE}
+main %>% 
+  ggplot(aes(x=lc_name, y=PM10)) +
+  geom_boxplot(notch = TRUE, fill = "deepskyblue2") +
+  labs(x=NULL)
+```
+
+# Wnioski
+
+% przekracza 50 µg/m3 dopuszczalnej dobowej normy według Głównego Inspektoratu Ochrony Środowiska. Rozstęp danych w zbiorze oscyluje pomiędzy około 5 do 65 µg/m3, jednakże w odniesieniu do wspomnianych norm GIOŚ wydaje się być niewielki. Nie wykazano znaczących statystycznie różnic pomiędzy obszarami rolniczymi, a sztucznymi (Ryc.2). Może być to spowodowane podobną odległością stacji pomiarowych od stref przemysłowych, osiedli domów jednorodzinnych lub ulic o dużej przepustowości. 
+
+Przy wykorzystaniu porównań post hoc, a także wizualizacji zjawiska, przedstawiono istotne różnice pomiędzy grupami pomiarów prowadzonych w różnej porze dnia. Stężenie PM10 w godzinach 16-24 jest większe niż w pozostałych częściach doby. Za taki wynik odpowiedzialne jest zjawisko inwersji termicznej. W godzinach popołudniowych, po zmroku, maleje temperatura powietrza przy gruncie; energia zaś emitowana jest ku wyższym partiom troposfery. Powstrzymywane jest pionowe mieszanie się powietrza – pyły i zanieczyszczenia będące produktami emisji zostają zablokowane. Efektem jest zwiększone stężenie aerozoli atmosferycznych przy gruncie oraz powstanie smogu typu londyńskiego. 
+
+
+# Literatura oraz źródła internetowe
+
+1.	https://goldbook.iupac.org/terms (stan z 4.01.2020)
+2.	http://www.grida.no/climate (stan z 4.01.2020)
+3.	https://en.wikipedia.org/wiki/Particulates (stan z 4.01.2020) 
+4.	https://www.irceline.be/en/documentation/faq (stan z 4.01.2020)
+5.	Nowosad, J., (2019). Elementarz programisty: wstęp do programowania używając R.
+6.	https://stackoverflow.com
+7.	https://nowosad.github.io/dydaktyka/
+8.	https://powietrze.gios.gov.pl/pjp/content/annual_assessment_air_acceptable_level
+
+
+# Udział
+
+- Patryk Połomski - Założenie repozytorium git, podstawowe czyszczenie danych oraz analiza wstępna
+- Błażej Kościański - przygotowanie ggplotów i wybór szaty kolorystycznej, wgłębna analiza statystyczna
+- Jakub Pacocha - poważny research odnosnie analiz, poprawa błędów po Błażeju, redakcja tego dokumentu
