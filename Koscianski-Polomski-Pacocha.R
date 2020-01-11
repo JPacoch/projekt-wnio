@@ -1,7 +1,12 @@
-# Określ statystyki opisowe zmiennej PM10.
-# Zbuduj wykres obrazujący zróżnicowanie wartości PM10. Stwórz też wizualizacje pokazujące relacje pomiędzy PM10 a przedziałami czasowymi pomiarów, oraz relacje pomiędzy PM10 a kategoriami pokrycia terenu.
-# Sprawdź czy istnieje różnica pomiędzy wartościami PM10 dla różnych przedziałów czasowych.
-# Sprawdź czy istnieje relacja pomiędzy wartościami PM10 a różnymi kategoriami pokrycia terenu.
+# Projekt wnioskownie
+# Tytuł: Czasowe i przestrzenne zależności w wielkości stężenia PM10
+# Autorzy: Błażej Kościański, Patryk Połomski, Jakub Pacocha
+
+# Zadania:
+#    Określ statystyki opisowe zmiennej PM10.
+#    Zbuduj wykres obrazujący zróżnicowanie wartości PM10. Stwórz też wizualizacje pokazujące relacje pomiędzy PM10 a przedziałami czasowymi pomiarów, oraz relacje pomiędzy PM10 a kategoriami pokrycia terenu.
+#    Sprawdź czy istnieje różnica pomiędzy wartościami PM10 dla różnych przedziałów czasowych.
+#    Sprawdź czy istnieje relacja pomiędzy wartościami PM10 a różnymi kategoriami pokrycia terenu.
 
 library("tidyverse")
 library("dunn.test")
