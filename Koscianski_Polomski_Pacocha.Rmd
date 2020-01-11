@@ -33,9 +33,9 @@ Kompozycja aerozoli atmosferycznych jest silnie zróżnicowana; składają się 
 
 Występowanie i odpowiednie zagęszczenie pyłów zawieszonych znacząco wpływają na klimat i środowsko. Bezpośrednio powodują absorpcję, rozpraszanie i odbijanie promieniowania długofalowego i promieniowania krótkofalowego w ziemskiej atmosferze. Procesy te wzmagają tempo ocieplania się klimatu. Istnieją również liczne dowody i wyjaśnienia opisujące oddziaływanie migrujących w atmosferze chmur pyłów wulkanicznych powodujących fluktuacje w średnich rocznych temperaturach na Ziemi. Jednakże wpływ aerozoli atmosferycznych na to zjawisko jest zdecydowanie trudniejszy do oszacowania niż w przypadku kluczowych gazów cieplarnianych.
 
-Najdrobniejsze cząsteczki pyłów z łatwością potrafią dostać się wewnątrz organizmów żywych poprzez ich drogi oddechowe. Substancje zaliczane do kategorii PM10 lub mniejsze, w przypadku cyklicznego wystwienia organizmu na ich działanie, mogą powodować liczne choroby i schorzenia.  Wdychiwane przez człowieka najczęściej doprowadzają do chorób górnych i dolnych dróg oddechowych, układu limfatycznego; sprzyjają rozwojowi astmy, pylicy czy nawet raka płuc.
+Najdrobniejsze cząsteczki pyłów z łatwością potrafią dostać się wewnątrz organizmów żywych poprzez ich drogi oddechowe. Substancje zaliczane do kategorii PM10 lub mniejsze, w przypadku cyklicznego wystawienia organizmu na ich działanie, mogą powodować liczne choroby i schorzenia.  Wdychane przez człowieka najczęściej doprowadzają do chorób górnych i dolnych dróg oddechowych, układu limfatycznego; sprzyjają rozwojowi astmy, pylicy czy nawet raka płuc.
 
-Celem pracy jest przetworzenie, scharakteryzowanie i analiza zebranych danych z punktówych pomiarów powietrza pod kątem występowania PM10 (zatem, takich pyłów, których średnica nie przekraczającza 10 μm) oraz wykazanie związków i prawidłowości dotyczących wysokości stężenia tych pyłów pod względem określonych kryteriów. 
+Celem pracy jest przetworzenie, scharakteryzowanie i analiza zebranych danych z punktowych pomiarów powietrza pod kątem występowania PM10 (zatem, takich pyłów, których średnica nie przekracza 10 μm) oraz wykazanie związków i prawidłowości dotyczących wysokości stężenia tych pyłów pod względem określonych kryteriów. 
 
 
 # Opis metod badawczych
@@ -54,7 +54,7 @@ Wstępne uporządkowanie i eliminacja błędnych wartości pozwoliły na zwięks
 shapiro.test(main[ ,2])
 ```
 
-Rozstęp zbioru wynosi 60,37613 µg/m3 (Ryc.1); w odległości jednego odchylenia standardowego (σ ≈ 8,92) od średniej, wynoszącej w przybliżeniu 36,16 - znajduje się 74,78% próby. 	Rozkład danych jest zbyt wysmukły by można było potwierdzić jego podobieństwo do rozkładu Gaussa. Nie obserwuje się znaczących statystycznie różnic pomiędzy grupami pomiarów wykonanych na obszarach rolnych, a tych wykonanych na obszarach sztucznych. Prawidłowość tę potwierdza negatywny wynik testu Wilcoxona, a także wizualizacja zjawiska na wykresie pudełkowym (Ryc.2). 
+Rozstęp zbioru wynosi 60,37613 µg/m3 (Ryc.1); w odległości jednego odchylenia standardowego (σ ≈ 8,92) od średniej, wynoszącej w przybliżeniu 36,16 - znajduje się 74,78% próby. 	Rozkład danych jest zbyt wysmukły by można było potwierdzić jego podobieństwo do rozkładu Gaussa. Nie obserwuje się znaczących statystycznie różnic pomiędzy grupami pomiarów wykonanych na obszarach rolnych, a tych wykonanych na obszarach sztucznych. Prawidłowość tę potwierdza negatywny wynik testu Wilcoxona, a także wizualizacja zjawiska na wykresie wiolonczelowym (Ryc.2). 
 
 ```{r,echo=FALSE, fig.cap="Ryc.1: Ogólny rozrzut danych PM10",fig.width=10, fig.height=5, fig.fullwidth=TRUE}
   main_gg = select(main, c(1,2,3))
@@ -64,7 +64,7 @@ Rozstęp zbioru wynosi 60,37613 µg/m3 (Ryc.1); w odległości jednego odchyleni
   scale_y_continuous(limits = c(0, 80), expand = c(0.005, 0.005),
                        breaks = c(4.9, seq(10, 65.2, by = 10),65.2)) +
   geom_point() + geom_line(color="gray33") +
-  labs(x="Stacja pomiarowa") +
+  labs(x="Stacje pomiarowe", color = "Pora dnia") +
   #geom_hline(aes(yintercept = 65.2), color = "gray70", size = 0.6)+
   #geom_hline(aes(yintercept = 4.9), color = "gray70", size = 0.6)+
   theme(axis.text.x = element_blank(),
@@ -75,18 +75,23 @@ Rozstęp zbioru wynosi 60,37613 µg/m3 (Ryc.1); w odległości jednego odchyleni
 
 Odwrotną tendencję przedstawia jednoczynnikowa analiza wariancji Kruskala-Wallisa przeprowadzona na trzech wyselekcjonowanych ze względu na okres pomiaru grupach. Potwierdza ona brak  podobieństw wszystkich trzech zbiorów danych. Przeprowadzenie porównań post hoc wykazuje statystyczne różnice pomiędzy grupami pomiarów wykonywanych w okresie 0-8, a 16-24 oraz 8-16, a 16-24. Nie obserwuje się znaczących różnic pomiędzy wartościami grup 0-8 i 8-16. Związek ten widoczny jest również na wizualizacji (Ryc.1).
 
-```{r, echo=FALSE, fig.cap="Ryc.2: Rozrzut danych PM10 wg pokrycia terenu", fig.width=4, fig.height=3,fig.fullwidth=TRUE}
+```{r, echo=FALSE, fig.cap="Ryc.2: Rozrzut danych PM10 wg pokrycia terenu", fig.width=6, fig.height=3,fig.fullwidth=TRUE}
 main %>% 
   ggplot(aes(x=lc_name, y=PM10)) +
-  geom_boxplot(notch = TRUE, fill = "deepskyblue2") +
-  labs(x=NULL)
+  geom_violin(fill="#008080") +
+  labs(x=NULL) +
+  scale_y_continuous(limits = c(0, 80), expand = c(0.005, 0.005),
+                     breaks = c(4.9, 35.3 ,65.2)) +
+  geom_hline(aes(yintercept = 35.3), color = "black", size = 0.6)+
+  theme(axis.ticks.x = element_blank(),
+        panel.background = element_blank())
 ```
 
 # Wnioski
 
 W przybliżeniu 6,4% pomiarów przekracza próg 50 µg/m3 - dopuszczalnej dobowej normy PM10 według Głównego Inspektoratu Ochrony Środowiska. Wartości danych w zbiorze oscylują pomiędzy około 5 do 65 µg/m3, jednakże w odniesieniu do wspomnianych norm GIOŚ ich maksima wydają się być niewielke. Nie wykazano znaczących statystycznie różnic pomiędzy obszarami rolniczymi, a sztucznymi (Ryc.2). Może być to spowodowane podobną odległością stacji pomiarowych od stref przemysłowych, osiedli domów jednorodzinnych lub ulic o dużej przepustowości. 
 
-Przy wykorzystaniu porównań post hoc, a także wizualizacji zjawiska, zaobserwowano istotne różnice pomiędzy grupami pomiarów prowadzonych w różnej porze dnia. Stężenie PM10 w godzinach 16-24 jest większe niż w pozostałych częściach doby. Za taki wynik odpowiedzialne jest zjawisko inwersji termicznej. W godzinach popołudniowych, po zmroku, maleje temperatura powietrza przy gruncie; energia zaś emitowana jest ku wyższym partiom troposfery. Powstrzymywane jest pionowe mieszanie się powietrza – pyły i zanieczyszczenia będące produktami emisji zostają zablokowane. Efektem jest zwiększone stężenie aerozoli atmosferycznych przy gruncie oraz powstanie smogu typu londyńskiego. 
+Przy wykorzystaniu porównań post hoc, a także wizualizacji zjawiska, zaobserwowano istotne różnice pomiędzy grupami pomiarów prowadzonych w różnej porze dnia. Stężenie PM10 w godzinach 16-24 jest większe niż w pozostałych częściach doby. Za taki wynik prawdopodobnie odpowiedzialne jest zjawisko inwersji termicznej. W godzinach popołudniowych, po zmroku, maleje temperatura powietrza przy gruncie; energia zaś emitowana jest ku wyższym partiom troposfery. Powstrzymywane jest pionowe mieszanie się powietrza – pyły i zanieczyszczenia będące produktami emisji zostają zablokowane. Efektem jest zwiększone stężenie aerozoli atmosferycznych przy gruncie oraz powstanie smogu typu londyńskiego. 
 
 Obszar poddany pomiarom to teren o względnie czystym powietrzu.
 
