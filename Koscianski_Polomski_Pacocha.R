@@ -68,7 +68,7 @@ sd(main$PM10)
   scale_y_continuous(limits = c(0, 80), expand = c(0.005, 0.005),
                        breaks = c(4.9, seq(10, 65.2, by = 10),65.2)) +
   geom_point() + geom_line(color="gray33") +
-  labs(title = "Ogólny rozrzut danych PM10", x="Stacja pomiarowa") +
+  labs(title = "Ogólny rozrzut danych PM10", x="Stacja pomiarowa", color = "Pora dnia") +
   #geom_hline(aes(yintercept = 65.2), color = "gray70", size = 0.6)+
   #geom_hline(aes(yintercept = 4.9), color = "gray70", size = 0.6)+
   theme(axis.text.x = element_blank(),
@@ -84,9 +84,13 @@ main %>%
 #----
 main %>% 
   ggplot(aes(x=lc_name, y=PM10)) +
-  geom_boxplot(notch = TRUE, fill = "deepskyblue2") +
-  labs(title = "Rozrzut danych PM10 wg pokrycia terenu", x=NULL)
-
+  geom_violin(fill="#008080") +
+  labs(title = "Rozrzut danych PM10 wg pokrycia terenu", x=NULL) +
+  scale_y_continuous(limits = c(0, 80), expand = c(0.005, 0.005),
+                     breaks = c(4.9, 35.3 ,65.2)) +
+  geom_hline(aes(yintercept = 35.3), color = "black", size = 0.6)+
+  theme(axis.ticks.x = element_blank(),
+        panel.background = element_blank())
 #----------------------------------------------------------
 #---- histogram rozkładu danych
 main %>% 
