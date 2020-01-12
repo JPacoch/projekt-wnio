@@ -80,7 +80,7 @@ sd(main$PM10)
 main %>% 
   ggplot(aes(x=pora_dnia, y=PM10)) +
   geom_boxplot(notch = TRUE, fill = "deepskyblue2") +
-  labs(title = "Rozrzut danych PM10 wg pory dnia") #tutaj cos o tym mozna napisac bo to ciekawe chyba
+  labs(title = "Rozrzut danych PM10 wg pory dnia") #tutaj cos o tym mozna napisac bo to ciekawe
 #----
 main %>% 
   ggplot(aes(x=lc_name, y=PM10)) +
@@ -112,7 +112,6 @@ KRUSKAL[[3]]  #p-value
 
 #odrzucamy hipozezę 0 bo p-value jest niskie i przyjmujemy hipotezę alternatywną
 #tzn, że istnieją różnice w wartościach PM10 między wartościami z różnych pór dnia
-#??? chyba
 
 
 #---- test post-hoc

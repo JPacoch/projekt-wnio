@@ -110,6 +110,6 @@ Obszar poddany pomiarom to teren o względnie czystym powietrzu.
 
 # Udział
 
-- Patryk Połomski - założenie repozytorium git, czyszczenie danych, analiza wstępna, estetyczne wykresy
-- Błażej Kościański - wgłębna analiza statystyczna przy współpracy z Jakubem, wykresy
-- Jakub Pacocha - poważny research odnosnie analiz, redakcja tego dokumentu
+- Patryk Połomski - administracja repozytorium git, czyszczenie danych, analiza wstępna, estetyka wykresów
+- Błażej Kościański - wgłębna analiza statystyczna, wnioski wstępne, wykresy
+- Jakub Pacocha - research odnośnie tematu badań, wsparcie w analizach, redakcja raportu
