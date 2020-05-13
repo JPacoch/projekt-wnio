@@ -145,6 +145,3 @@ nrow(main_1sd) * 100 / nrow(main)
 
 #ile procent zajmuja wartosci powyżej 50 (na życzenie Jakuba)
 nrow(filter(main, main$PM10 > 50)) * 100 / nrow(main)
-
-#halko co sie dzieje
-#test1
